@@ -1,0 +1,299 @@
+
+@media screen and (max-width: 768px) {
+  #intro-lomda {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  background-image: url('/public/assets/imgs/Bg1.png');
+}
+
+#logo-white {
+  position: absolute;
+  width: 40vw;
+  height: auto;
+  z-index: 5;
+  right: 50%;
+  transform: translateX(50%);
+  top: 6%;
+}
+
+#welcome-text{
+  color: white;
+  font-family: "karantina" ,Arial;
+  font-size: 3em;
+  transform: translateX(50%);
+  right: 50%;
+  direction: rtl;
+  POSITION: absolute;
+  margin-top: -27vh;
+  width: 90vw;
+}
+
+#introduction {
+  font-family: 'Heebo', sans-serif;
+  font-size: 1.2em;
+  color: white;
+  position: absolute;
+  direction: rtl;
+  margin-top: -4vh;
+  width: 70vw;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+#sub-title{
+  font-family: 'Karantina' ,Arial;
+  font-size:4em;;
+  color: white;
+  margin-bottom: -5vw;
+  position:absolute;
+  transform: translateX(50%);
+  right: 50%;
+  margin-top: -7vh;
+  width:90vw;
+}
+
+
+
+.hpArrow-intro {
+  position: absolute;
+  z-index: 5;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 20vh;
+  animation: bounce2 2s ease infinite;
+  height: 10vh;
+  width: auto;
+  /* top: 77vh; */
+}
+
+.video-intro {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  height: 100vh;
+}
+
+.skip {
+  position: absolute;
+  top: 6%;
+  left: 2%;
+  background-color: transparent;
+  font-family: 'Assistant', sans-serif;
+  font-size: 1.2em;
+  color: black;
+  z-index: 9999999;
+  border: none;
+  font-weight: bolder;
+}
+
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px)  {
+  #intro-lomda {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    background-image: url('/public/assets/imgs/Bg2.png');
+  }
+  #logo-white {
+    position: absolute;
+    width: 40vw;
+    height: auto;
+    z-index: 5;
+    right: 50%;
+    transform: translateX(50%);
+    top: 6%;
+  }
+  
+#welcome-text{
+  color: white;
+  font-family: "karantina" ,Arial;
+  font-size: 9em;
+  transform: translateX(50%);
+  right: 50%;
+  direction: rtl;
+  POSITION: absolute;
+  margin-top: -32vh;
+  width: 90vw;
+}
+
+#introduction {
+  font-family: 'Heebo', sans-serif;
+  font-size: 3em;
+  color: white;
+  position: absolute;
+  direction: rtl;
+  margin-top: -16vh;
+  width: 80vw;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+
+
+.hpArrow-intro {
+  position: absolute;
+  z-index: 5;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 18vh;
+  animation: bounce2 2s ease infinite;
+  height: 13vh;
+  width: auto;
+  /* top: 77vh; */
+}
+.hpArrow-intro:hover {
+  cursor: pointer;
+
+}
+
+.video-intro {
+  position:absolute;
+  height:150vh;
+
+}
+}
+
+
+@media screen and (min-width: 1025px) {
+  #intro-lomda {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    background-image: url('/public/assets/imgs/Bg2.png');
+  }
+  #logo-white {
+    position: absolute;
+    width: 20vw;
+    height: auto;
+    z-index: 5;
+    right: 50%;
+    transform: translateX(50%);
+    top: 6%;
+  }
+  
+#welcome-text{
+  color: white;
+  font-family: "karantina" ,Arial;
+  font-size: 20em;
+  transform: translateX(50%);
+  right: 50%;
+  direction: rtl;
+  POSITION: absolute;
+  margin-top: -20vh;
+  width: 90vw;
+}
+
+#introduction {
+  font-family: 'Heebo', sans-serif;
+  font-size: 10em;
+  color: white;
+  position: absolute;
+  direction: rtl;
+  margin-top: -4vh;
+  width: 70vw;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+
+
+.hpArrow-intro {
+  position: absolute;
+  z-index: 5;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 20vh;
+  animation: bounce2 2s ease infinite;
+  height: 20vh;
+  width: auto;
+  /* top: 77vh; */
+}
+.hpArrow-intro:hover {
+  cursor: pointer;
+
+}
+
+.video-intro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain; /* מתאים את הוידיאו למסך מבלי לחתוך אותו */
+}
+
+}
+
+
+
+
+
+
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+#video.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+
+.intro-text-slide-in {
+  animation: slide-in-from-top 1.5s forwards;
+}
+
+@keyframes slide-in-from-top {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce2 {
+  0% {
+    bottom: 10vh;
+  }
+
+  50% {
+    bottom: 8vh;
+  }
+
+  100% {
+    bottom: 10vh;
+  }
+}
