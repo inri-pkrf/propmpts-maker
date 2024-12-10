@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route, useNavigate } from 'react-router-d
 import './App.css';
 import Intro from './componentsJS/Intro';
 import Home from './componentsJS/Home';
+import Header from './componentsJS/Header';
 import Menu from './componentsJS/Menu';
 import PartOne from './componentsJS/PartOne';
 import PartTwo from './componentsJS/PartTwo';
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div className="App">
+    <Header className="header-fixed" />
 
       <Routes>
         <Route path="/" element={<Intro />} />

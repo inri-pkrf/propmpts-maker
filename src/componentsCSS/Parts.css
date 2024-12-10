@@ -15,52 +15,26 @@
     
 @media screen and (max-width: 768px) {
   
-
-.home-title{
-    font-family: "karantina";
-    font-size: 3.5em;
-    font-weight: 400;
-    position: absolute;
-    right: 50%;
-    transform: translateX(50%);
-    width: 90vw;
-    margin-top: 13vh;
-    text-align: center;
+.Part-title{
+    position:absolute;
+    margin-top: 10vh;
+    font-family:"Karantina";
+    color:white;
+    background-color: #1995b1;
+    width:50vw;
+    height:5vh;
+    text-align: right;
+    padding-right:5vw;
 
 }
-
-.info1{
+.user-Selections{
+    position:absolute;
+    margin-top: 15vh;
+    right: 9%;
+    text-align: right;
     font-family: "Heebo";
-    font-size: 1.3em;
-    position: absolute;
-    right: 50%;
-    transform: translateX(50%);
-    width: 90vw;
-    margin-top: 36vh;
-    text-align: center;
-
+    width:90vw;
 }
-.home-button {
-    background-color:#1995b1;
-    border: none;
-    border-radius: 55px;
-    width: 75vw;
-    height: 10vh;
-    position: absolute;
-    font-size: 2em;
-    font-family: "Karantina";
-    font-weight: bold;
-    color: #ffffff;
-    padding: 1.5vw;
-    right: 50%;
-    transform: translateX(50%);
-    margin-top: 58vh;
-    box-shadow: 3px 3px 10px rgba(50, 48, 48, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.15);
-}
-
-
-
-
 
 
 

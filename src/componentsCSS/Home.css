@@ -83,12 +83,94 @@
   
   @media screen and (min-width: 769px) and (max-width: 1024px)  {
   
+.home-title{
+    font-family: "karantina";
+    font-size: 3.5em;
+    font-weight: 400;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    width: 90vw;
+    margin-top: 3vh;
+    text-align: center;
+
+}
+
+.info1{
+    font-family: "Heebo";
+    font-size: 1.3em;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    width: 90vw;
+    margin-top: 36vh;
+    text-align: center;
+
+}
+.home-button {
+    background-color:#1995b1;
+    border: none;
+    border-radius: 55px;
+    width: 75vw;
+    height: 10vh;
+    position: absolute;
+    font-size: 2em;
+    font-family: "Karantina";
+    font-weight: bold;
+    color: #ffffff;
+    padding: 1.5vw;
+    right: 50%;
+    transform: translateX(50%);
+    margin-top: 58vh;
+    box-shadow: 3px 3px 10px rgba(50, 48, 48, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.15);
+}
   }
   
   
   @media screen and (min-width: 1025px) {
   
-  
+   
+.home-title{
+    font-family: "karantina";
+    font-size: 25em;
+    font-weight: 400;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    width: 90vw;
+    margin-top: 13vh;
+    text-align: center;
+
+}
+
+.info1{
+    font-family: "Heebo";
+    font-size: 10em;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    width: 90vw;
+    margin-top: 45vh;
+    text-align: center;
+
+}
+.home-button {
+    background-color:#1995b1;
+    border: none;
+    border-radius: 55px;
+    width: 25vw;
+    height: 10vh;
+    position: absolute;
+    font-size: 10em;
+    font-family: "Karantina";
+    font-weight: bold;
+    color: #ffffff;
+    padding: 1.5vw;
+    right: 50%;
+    transform: translateX(50%);
+    margin-top: 58vh;
+    box-shadow: 3px 3px 10px rgba(50, 48, 48, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.15);
+}
   }
   
   
