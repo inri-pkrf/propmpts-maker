@@ -1,67 +1,72 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const PromptMaker = () => {
-  const navigate = useNavigate();
-  const [selectedValues, setSelectedValues] = useState({});
+  const [allValues, setAllValues] = useState([]);
+  const [prompt, setPrompt] = useState('');
 
-  // קריאה מה-sessionStorage כדי לשלוף את הבחירות של המשתמש
-  useEffect(() => {
-    const storedValues = sessionStorage.getItem('selectedValues');
-    if (storedValues) {
-      const parsedValues = JSON.parse(storedValues);
-      console.log("Loaded selected values:", parsedValues);  // הדפסת הערכים כדי לבדוק
-      setSelectedValues(parsedValues);
-    } else {
-      console.log("No data found in sessionStorage");
-    }
-  }, []);
-  
-  // פונקציה להחזרת צבע ירוק רק אם יש ערך
-  const getHighlightedText = (value) => value ? `<span style="color: green;">${value}</span>` : value;
+  // פונקציה לחילוץ המידע מתוך sessionStorage
+  const extractKeys = (obj) => {
+    let values = [];
+    Object.keys(obj).forEach(key => {
+      const value = obj[key];
+      if (typeof value === 'object') {
+        // אם הערך הוא אובייקט או מערך, נפנה אליהם רקורסיבית
+        values = values.concat(extractKeys(value));
+      } else if (value === true) {
+        // אם הערך הוא true, נשמור רק את המפתח
+        values.push(key);
+      } else {
+        // אם הערך לא true, נשמור אותו
+        values.push(value);
+      }
+    });
+    return values;
+  };
 
-  const generateStory = () => {
-    const { partOne = {}, partTwo = {}, partFour = {}, partFive = {} } = selectedValues;
-    const { מאפייני_הרשות, אוכלוסיה, אזור_בארץ, כיווני_גישה, דרכים_ברשות, תחבורה_ברשות } = partOne;
-    const { סוג_מצב_חירום, איומים_על_הרשות, אתגרים } = partTwo;
-    const { טווחי_זמן, קפיצות_זמן, מאפייני_חירום, רגשות, שעה_ועונה, עונות, תאורה, תנאי_חום_ומזג_אוויר } = partFour;
-    const { מטרות_והישגים, תחושות } = partFive;
-  
+  // פונקציה לבניית פסקה מתוך המידע שנחילץ
+  const buildPrompt = (values) => {
+    // בניית הפסקה עם כל הערכים שנחולצו
     return `
-      התרגיל יתבצע ברשות ${getHighlightedText(מאפייני_הרשות?.עיר || '______________')} הכוללת ${getHighlightedText(מאפייני_הרשות?.רבי_קומות || '______________')}.
-      התרחיש יתמקד ב${getHighlightedText(סוג_מצב_חירום || '______________')} שהוביל/ו ל${getHighlightedText(איומים_על_הרשות || '______________')}.
-      במסגרת התרגיל ישולבו ${getHighlightedText(אתגרים || '______________')}.
-      מטרות התרגיל הן ${getHighlightedText(מטרות_והישגים?.איסוף_מידע || '______________')}.
-      התרגיל יתקיים בתנאים של ${getHighlightedText(תנאי_חום_ומזג_אוויר || '______________')}, עם תאורה ${getHighlightedText(תאורה || '______________')}, והשעה היא ${getHighlightedText(שעה_ועונה || '______________')}.
-      התרגיל יתקיים באזור ${getHighlightedText(אזור_בארץ || '______________')}, עם דרכים ברשות כגון ${getHighlightedText(דרכים_ברשות || '______________')} והגישה למקום תהיה דרך כיווני גישה ${getHighlightedText(כיווני_גישה || '______________')}.
-      התחבורה ברשות כוללת ${getHighlightedText(תחבורה_ברשות || '______________')}.
-      התרגיל יכיל אלמנטים של פחד.
-      תחושות של העצמה יילקחו בחשבון במהלך התרגיל.
-      התרגיל יתקיים בעונת אביב.
-    `;
-  };
-  
-  // פונקציה להעתקת הפסקה ללוח
-  const handleCopy = () => {
-    const story = generateStory();
-    navigator.clipboard.writeText(story);
-    alert('הפסקה הועתקה ללוח');
+    ההתרגיל יתבצע ברשות של סוג: <span style="color: green;">${values[0]}</span> הכוללת <span style="color: green;">${values[1]}</span>. 
+    התרחיש יתמקד בהגנה על האוכלוסייה, במיוחד קבוצות גיל: <span style="color: green;">${values[2]}</span>.
+    באזור שנבחר, כגון <span style="color: green;">${values[3]}</span> עם גישה מ-<span style="color: green;">${values[4]}</span> והדרכים העיקריות הן: <span style="color: green;">${values[5]}</span>. 
+    במהלך התרגיל, נתרגל התמודדות עם מצבי חירום כמו <span style="color: green;">${values[6]}</span>, עם אתגרים כמו <span style="color: green;">${values[7]}</span>. 
+    המטרה היא לבצע תרגול מערך מבצעים ולהתמקד בסוגי אימונים כמו <span style="color: green;">${values[8]}</span> באזורים כמו <span style="color: green;">${values[9]}</span>. 
+    שעת התרגול תהיה <span style="color: green;">${values[10]}</span> בעונה של <span style="color: green;">${values[11]}</span> עם תנאי מזג אוויר של <span style="color: green;">${values[12]}</span>.
+  `;
   };
 
-  // פונקציה להחזרה להתחלה ו-CLEAR של ה-sessionStorage
-  const handleRestart = () => {
-    sessionStorage.clear();
-    navigate('/step1');
-  };
+  useEffect(() => {
+    // בדיקה אם הנתונים קיימים ב-sessionStorage
+    const storedValues = sessionStorage.getItem('selectedValues');
+    if (!storedValues) {
+      console.log('No session data found');
+      return;
+    }
+
+    const parsedValues = JSON.parse(storedValues);
+
+    // חילוץ כל הערכים
+    const allExtractedValues = extractKeys(parsedValues);
+    
+    // הדפסת המערך שנחולץ ב-console
+    console.log('Extracted Values:', allExtractedValues);
+
+    setAllValues(allExtractedValues); // עדכון הסטייט עם הערכים
+  }, []);
+
+  useEffect(() => {
+    // לאחר שהסטייט עדכן, נבנה את הפסקה
+    if (allValues.length > 0) {
+      const promptText = buildPrompt(allValues);
+      setPrompt(promptText); // עדכון הפסקה
+    }
+  }, [allValues]);
 
   return (
     <div className="Menupage-container">
       <h1>פרומפט סיפורי</h1>
-      <p dangerouslySetInnerHTML={{ __html: generateStory() }} />
-      <div>
-        <button onClick={handleCopy}>העתק פסקה</button>
-        <button onClick={handleRestart}>חזרה להתחלה</button>
-      </div>
+      <p dangerouslySetInnerHTML={{ __html: prompt }} />
     </div>
   );
 };

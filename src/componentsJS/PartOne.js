@@ -67,7 +67,7 @@ const PartOne = () => {
   };
 
   // פונקציה לבדיקת אם הכל נבחר
-  const isAllSelected = () => {
+ const isAllSelected = () => {
     // בודק שכל קטגוריה נבחרה
     return Object.keys(jsonData).every(category => {
       const categoryValue = selectedValues[category];

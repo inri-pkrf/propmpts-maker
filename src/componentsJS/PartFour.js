@@ -12,7 +12,7 @@ const PartFour = () => {
   useEffect(() => {
     const storedValues = sessionStorage.getItem('selectedValues');
     if (storedValues) {
-      setSelectedValues(JSON.parse(storedValues).partFour || {});
+      setSelectedValues(JSON.parse(storedValues).partFour || {}); // טוען את נתוני PartFour בלבד
     }
   }, []);
 
@@ -62,14 +62,22 @@ const PartFour = () => {
     };
 
     setSelectedValues(newState);
-    sessionStorage.setItem('selectedValues', JSON.stringify({ ...selectedValues, partFour: newState }));
+
+    // עדכון ה-sessionStorage, שמירה על הערכים הקודמים של כל השלבים
+    const allStoredValues = JSON.parse(sessionStorage.getItem('selectedValues')) || {};
+    allStoredValues.partFour = newState;  // עדכון רק של PartFour
+    sessionStorage.setItem('selectedValues', JSON.stringify(allStoredValues)); // שמירה מחדש
   };
 
-  // פונקציה לניהול הבחירות בדרופ-דאונים
+  // פונקציה לניהול הבחירות בדרופ-דאון
   const handleDropdownChange = (category, value) => {
     const newState = { ...selectedValues, [category]: value };
     setSelectedValues(newState);
-    sessionStorage.setItem('selectedValues', JSON.stringify({ ...selectedValues, partFour: newState }));
+
+    // עדכון ה-sessionStorage, שמירה על הערכים הקודמים של כל השלבים
+    const allStoredValues = JSON.parse(sessionStorage.getItem('selectedValues')) || {};
+    allStoredValues.partFour = newState;  // עדכון רק של PartFour
+    sessionStorage.setItem('selectedValues', JSON.stringify(allStoredValues)); // שמירה מחדש
   };
 
   // פונקציה להמיר את הבחירות לפסקה

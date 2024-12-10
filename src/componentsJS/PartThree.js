@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import training from '../data/training.json'; // נתיב לקובץ ה-JSON שלך
+import crowd from '../data/crowd.json'; // נתיב לקובץ ה-JSON שלך
 import '../componentsCSS/Parts.css';
 
-const PartFour = () => {
+const PartThree = () => {
   const [selectedValues, setSelectedValues] = useState({});
-  const jsonData = training; // קריאה מה-JSON
+  const jsonData = crowd; // קריאה מה-JSON
   const navigate = useNavigate();
 
   // קריאה מ-sessionStorage כאשר הרכיב נטען
   useEffect(() => {
     const storedValues = sessionStorage.getItem('selectedValues');
     if (storedValues) {
-      setSelectedValues(JSON.parse(storedValues).partFour || {}); // נטען רק את הבחירות של partFour
+      setSelectedValues(JSON.parse(storedValues).partThree || {});
     }
   }, []);
 
@@ -30,7 +30,7 @@ const PartFour = () => {
 
     // עדכון ה-sessionStorage
     const allStoredValues = JSON.parse(sessionStorage.getItem('selectedValues')) || {};
-    allStoredValues.partFour = newState; // עדכון רק של partFour
+    allStoredValues.partThree = newState; // עדכון רק של partFour
     sessionStorage.setItem('selectedValues', JSON.stringify(allStoredValues)); // שמירה מחדש
   };
 
@@ -41,7 +41,7 @@ const PartFour = () => {
 
     // עדכון ה-sessionStorage
     const allStoredValues = JSON.parse(sessionStorage.getItem('selectedValues')) || {};
-    allStoredValues.partFour = newState; // עדכון רק של partFour
+    allStoredValues.partThree = newState;
     sessionStorage.setItem('selectedValues', JSON.stringify(allStoredValues)); // שמירה מחדש
   };
 
@@ -87,7 +87,7 @@ const PartFour = () => {
   // פונקציה להעבר לשלב הבא
   const handleNextStep = () => {
     if (isAllSelected()) {
-      navigate('/step5'); // שינוי לעמוד המתאים לאחר שלב 4
+      navigate('/step4'); 
     } else {
       alert('נא לבחור לפחות אפשרות אחת מכל קטגוריה');
     }
@@ -155,4 +155,4 @@ const PartFour = () => {
   );
 };
 
-export default PartFour;
+export default PartThree;
