@@ -1,6 +1,6 @@
-.PartOne-container {
-    position: fixed;
-      top: 0;
+.part-container {
+    position: relative; 
+    top: 0;
       left: 0;
       width: 100%;
       height: 100%;
@@ -10,27 +10,26 @@
       direction: rtl;
 
       padding-top: 2vh;
-      overflow: scroll;
+      overflow-y: scroll;
+      overflow-x: hidden;
     }
     
 @media screen and (max-width: 768px) {
   
 .Part-title{
-    position:absolute;
     margin-top: 10vh;
     font-family:"Karantina";
     color:white;
     background-color: #1995b1;
-    width:50vw;
-    height:5vh;
+    width:80vw;
+    height:7vh;
     text-align: right;
     padding-right:5vw;
 
 }
 .user-Selections{
-    position:absolute;
-    margin-top: 15vh;
-    right: 9%;
+    margin-top: 9vh;
+    right: 9vw;
     text-align: right;
     font-family: "Heebo";
     width:90vw;
@@ -38,32 +37,69 @@
 
 
 
-.footer{
-    position: absolute;
-    right: 50%;
-    height: 10vh;
-    transform: translateX(50%);
-    background-color: rgba(86, 85, 85, 0);
-    font-weight: bold;
-    margin-top: 1vh;
-    margin-bottom: 22vh;
-    width: 90vw;
-    font-size: 1.1em;
+.chevron {
+    margin-right: 2vw;
+    transform: rotate(180deg);
+    height:3vh;
+    width: auto;
+}
+
+.chevron.expanded {
+    transform: rotate(90deg); /* סובב את המשולש */
+}
+.selected-info {
+    position: fixed;
+    width:50vw;
+    font-family: "Heebo";
+    top: 20vh;
+    left: 2vw;
+    background-color: rgb(189, 189, 189);
+    border: solid rgb(189, 189, 189);
+    border-radius: 30px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 
 
+.button-go {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1995b1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-go:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+.selsected-title{
+    font-family: "Karantina";
+    font-size: 2em;
+    font-weight: 100;
+
+}
 
   
   }
   
   @media screen and (min-width: 769px) and (max-width: 1024px)  {
-  
+    .button-go:hover:not(:disabled) {
+        background-color: #45a049;
+      }
   }
   
   
   @media screen and (min-width: 1025px) {
-  
+    .button-go:hover:not(:disabled) {
+        background-color: #45a049;
+      }
   
   }
   

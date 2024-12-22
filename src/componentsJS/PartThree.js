@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import crowd from '../data/crowd.json'; // נתיב לקובץ ה-JSON שלך
+import crowd from '../data/crowd.json';
 import '../componentsCSS/Parts.css';
 
 const PartThree = () => {
   const [selectedValues, setSelectedValues] = useState({});
-  const jsonData = crowd; // קריאה מה-JSON
+  const [expandedCategories, setExpandedCategories] = useState({});
+  const jsonData = crowd;
   const navigate = useNavigate();
-
-  // קריאה מ-sessionStorage כאשר הרכיב נטען
   useEffect(() => {
     const storedValues = sessionStorage.getItem('selectedValues');
     if (storedValues) {
@@ -45,7 +44,15 @@ const PartThree = () => {
     sessionStorage.setItem('selectedValues', JSON.stringify(allStoredValues)); // שמירה מחדש
   };
 
-  // פונקציה להמיר את הבחירות לפסקה
+  const toggleCategory = (category) => {
+    // רק עבור קטגוריות עם אובייקט (צ'ק בוקסים), לא עבור מערכים
+    if (typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category])) {
+      setExpandedCategories((prevState) => ({
+        ...prevState,
+        [category]: !prevState[category],
+      }));
+    }
+  };
   const renderSelectedValues = () => {
     let result = [];
     Object.keys(selectedValues).forEach(category => {
@@ -94,55 +101,64 @@ const PartThree = () => {
   };
 
   return (
-    <div className="partFour-container">
-      <h1 className="partFour-title">מאפייני תרחיש היחוס</h1>
-
-      {/* יצירת צ'ק-ליסטים ודרופ-דאונים בצורה גנרית */}
-      {Object.keys(jsonData).map(category => (
-        <div key={category}>
-          <h3>{category}</h3>
-
-          {/* אם הקטגוריה מכילה אובייקט (צ'ק-בוקסים) */}
-          {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) ? (
-            Object.keys(jsonData[category]).map(subCategory => (
-              <div key={subCategory}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={selectedValues[category] && selectedValues[category][subCategory] || false}
-                    onChange={() => handleCheckboxChange(category, subCategory)}
-                  />
-                  {subCategory}
-                </label>
-              </div>
-            ))
-          ) : null}
-
-          {/* אם הקטגוריה מכילה מערך (דרופ-דאון) */}
-          {Array.isArray(jsonData[category]) ? (
-            <select
-              value={selectedValues[category] || ''}
-              onChange={(e) => handleDropdownChange(category, e.target.value)}
+    <div className="part-container">
+      <h1 className="Part-title"> 03 קהל יעד וסוג האימון </h1>
+      <div className="user-Selections">
+        {Object.keys(jsonData).map((category, index) => (
+          <div key={category} className={`category-container category-${index}`}>
+            <div
+              className="category-header"
+              onClick={() => toggleCategory(category)} // כעת הכותרת והחץ גם יחד מקבלים את האירוע
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             >
-              <option value="">בחר</option>
-              {jsonData[category].map((item, index) => (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          ) : null}
-        </div>
-      ))}
-
-      {/* הצגת הבחירות כטקסט בתוך פסקה */}
-      <div className="selected-info">
-        <h2>הבחירות שביצעת:</h2>
-        <p>{renderSelectedValues()}</p>
+              <h3 style={{ marginRight: '8px' }}>{category}</h3>
+              {/* החץ מוצג רק אם מדובר בקטגוריה עם אובייקט (צ'ק בוקסים) */}
+              {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) && (
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/imgs/nextBlack.png`}
+                  alt="Toggle"
+                  className={`chevron ${expandedCategories[category] ? 'expanded' : ''}`}
+                  style={{ marginLeft: '8px', cursor: 'pointer' }}
+                />
+              )}
+            </div>
+            {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) && expandedCategories[category] && (
+              <div className="checkbox-group">
+                {Object.keys(jsonData[category]).map((subCategory) => (
+                  <div key={subCategory} className="checkbox-item">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={selectedValues[category]?.[subCategory] || false}
+                        onChange={() => handleCheckboxChange(category, subCategory)}
+                      />
+                      {subCategory}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            )}
+            {Array.isArray(jsonData[category]) && (
+              <div className="dropdown-group">
+                <select
+                  value={selectedValues[category] || ''}
+                  onChange={(e) => handleDropdownChange(category, e.target.value)}
+                >
+                  <option value="">בחרו</option>
+                  {jsonData[category].map((item, itemIndex) => (
+                    <option key={itemIndex} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-
-      {/* כפתור אשר והמשך */}
-      <div>
+      <div className="selected-info">
+        <h2 className="selsected-title">הבחירות שביצעת:</h2>
+        <p>{renderSelectedValues()}</p>
         <button
           className="button-go"
           disabled={!isAllSelected()}
@@ -151,6 +167,7 @@ const PartThree = () => {
           אשר והמשך
         </button>
       </div>
+       
     </div>
   );
 };

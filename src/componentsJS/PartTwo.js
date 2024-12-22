@@ -5,10 +5,11 @@ import '../componentsCSS/Parts.css';
 
 const PartTwo = () => {
   const [selectedValues, setSelectedValues] = useState({});
+  const [expandedCategories, setExpandedCategories] = useState({});
   const jsonData = scenerio;
   const navigate = useNavigate();
 
-  // קריאה מ-sessionStorage כאשר הרכיב נטען
+  // אתחול ערכים ב- useEffect
   useEffect(() => {
     const storedValues = sessionStorage.getItem('selectedValues');
     if (storedValues) {
@@ -41,8 +42,18 @@ const PartTwo = () => {
     allStoredValues.partTwo = newState; // עדכון רק של PartTwo
     sessionStorage.setItem('selectedValues', JSON.stringify(allStoredValues)); // שמירה מחדש
   };
+  
+  // פונקציה לתצוגת קטגוריות
+  const toggleCategory = (category) => {
+    if (jsonData[category] && typeof jsonData[category] === 'object') {
+      setExpandedCategories((prevState) => ({
+        ...prevState,
+        [category]: !prevState[category],
+      }));
+    }
+  };
 
-  // פונקציה להמיר את הבחירות לפסקה
+  // פונקציה להדפסת ערכים נבחרים
   const renderSelectedValues = () => {
     let result = [];
     Object.keys(selectedValues).forEach(category => {
@@ -60,7 +71,7 @@ const PartTwo = () => {
     return result.join('. ');
   };
 
-  // פונקציה לבדיקת אם הכל נבחר
+  // פונקציה לבדוק אם כל הבחירות בוצעו
   const isAllSelected = () => {
     // בודק שכל קטגוריה נבחרה
     return Object.keys(jsonData).every(category => {
@@ -90,64 +101,73 @@ const PartTwo = () => {
     }
   };
 
+
   return (
-    <div className="PartTwo-container">
-      <h1 className='PartTwo-title'>מאפייני תרחיש היחוס</h1>
-
-      {/* יצירת צ'ק-ליסטים ודרופ-דאונים בצורה גנרית */}
-      {Object.keys(jsonData).map(category => (
-        <div key={category}>
-          <h3>{category}</h3>
-
-          {/* אם הקטגוריה מכילה אובייקט (צ'ק-בוקסים) */}
-          {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) ? (
-            Object.keys(jsonData[category]).map(subCategory => (
-              <div key={subCategory}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={selectedValues[category] && selectedValues[category][subCategory] || false}
-                    onChange={() => handleCheckboxChange(category, subCategory)}
-                  />
-                  {subCategory}
-                </label>
-              </div>
-            ))
-          ) : null}
-
-          {/* אם הקטגוריה מכילה מערך (דרופ-דאון) */}
-          {Array.isArray(jsonData[category]) ? (
-            <select
-              value={selectedValues[category] || ''}
-              onChange={(e) => handleDropdownChange(category, e.target.value)}
+    <div className="part-container">
+      <h1 className="Part-title">02 מאפייני התרחיש</h1>
+      <div className="user-Selections">
+        {Object.keys(jsonData).map((category, index) => (
+          <div key={category} className={`category-container category-${index}`}>
+            <div
+              className="category-header"
+              onClick={() => toggleCategory(category)}
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             >
-              <option value="">בחר</option>
-              {jsonData[category].map((item, index) => (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          ) : null}
-        </div>
-      ))}
-
-      {/* הצגת הבחירות כטקסט בתוך פסקה */}
-      <div className="selected-info">
-        <h2>הבחירות שביצעת:</h2>
-        <p>{renderSelectedValues()}</p>
+              <h3 style={{ marginRight: '8px' }}>{category}</h3>
+              {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) && (
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/imgs/nextBlack.png`}
+                  alt="Toggle"
+                  className={`chevron ${expandedCategories[category] ? 'expanded' : ''}`}
+                  style={{ marginLeft: '8px', cursor: 'pointer' }}
+                />
+              )}
+            </div>
+            {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) && expandedCategories[category] && (
+              <div className="checkbox-group">
+                {Object.keys(jsonData[category]).map((subCategory) => (
+                  <div key={subCategory} className="checkbox-item">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={selectedValues[category]?.[subCategory] || false}
+                        onChange={() => handleCheckboxChange(category, subCategory)}
+                      />
+                      {subCategory}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            )}
+            {Array.isArray(jsonData[category]) && (
+              <div className="dropdown-group">
+                <select
+                  value={selectedValues[category] || ''}
+                  onChange={(e) => handleDropdownChange(category, e.target.value)}
+                >
+                  <option value="">בחרו</option>
+                  {jsonData[category].map((item, itemIndex) => (
+                    <option key={itemIndex} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-
-      {/* כפתור אשר והמשך */}
-      <div>
-        <button className="button-go"
-          disabled={!isAllSelected()}  // הכפתור מאופשר רק אם בוצעה לחיצה לפחות אחת מכל מערך
-          onClick={handleNextStep} // קריאה לפונקציה שמבצעת ניווט
+      <div className="selected-info">
+        <h2 className="selsected-title">הבחירות שביצעת:</h2>
+        <p>{renderSelectedValues()}</p>
+        <button
+          className="button-go"
+          disabled={!isAllSelected()}
+          onClick={handleNextStep}
         >
           אשר והמשך
         </button>
       </div>
-      
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../componentsCSS/PromptMaker.css';
 
 const PromptMaker = () => {
   const [allValues, setAllValues] = useState({});
@@ -29,7 +30,6 @@ const PromptMaker = () => {
     return result;
   };
 
-  // פונקציה לבניית פסקה מתוך המידע שנחילץ
   // פונקציה להמיר ערכים למחרוזת בצורה דינמית
   const getFormattedValue = (value) => {
     if (Array.isArray(value)) {
@@ -48,29 +48,29 @@ const PromptMaker = () => {
   // פונקציה לחלק הראשון של ההתרגיל
   const buildFullPrompt = (values) => {
     return `
-      <p>ההתרגיל יתבצע ברשות אשר מאופיינת ב- <span style="color: green;">${getFormattedValue(values["partOne"]["מאפייני הרשות"]) || "לא נבחר"}</span>. 
-      אוכלוסיית הרשות מכילה בתוכה <span style="color: green;">${getFormattedValue(values["partOne"]["אוכלוסיה"]) || "לא נבחר"}</span>. 
-      הרשות נמצאת ב<span style="color: green;">${getFormattedValue(values["partOne"]["אזור בארץ"]) || "לא נבחר"}</span>, 
-      עם כיווני גישה מ- <span style="color: green;">${getFormattedValue(values["partOne"]["כיווני גישה"]) || "לא נבחר"}</span>. 
-      הדרכים ברשות הינן <span style="color: green;">${getFormattedValue(values["partOne"]["דרכים ברשות"]) || "לא נבחר"}</span> 
-      וצירי הגישה לרשות הם <span style="color: green;">${getFormattedValue(values["partOne"]["צירי גישה לרשות"]) || "לא נבחר"}</span>. 
-      תחבורה ברשות כוללת <span style="color: green;">${getFormattedValue(values["partOne"]["תחבורה ברשות"]) || "לא נבחר"}</span>.</p>
-        <p>סוג מצב החירום הוא <span style="color: green;">${getFormattedValue(values["partTwo"]["סוג_מצב_חירום"]) || "לא נבחר"}</span>, 
-      והאיומים על הרשות הם <span style="color: green;">${getFormattedValue(values["partTwo"]["איומים_על_הרשות"]) || "לא נבחר"}</span>. 
-      אתגרים במהלך התרגיל כוללים <span style="color: green;">${getFormattedValue(values["partTwo"]["אתגרים"]) || "לא נבחר"}</span>.</p>
-       <p>מי שמגיע לאימון הם <span style="color: green;">${getFormattedValue(values["partThree"]["מי מגיע לאימון"]) || "לא נבחר"}</span>, 
-      ובמהלך האימון נתמקד ב- <span style="color: green;">${getFormattedValue(values["partThree"]["מה מתרגלים"]) || "לא נבחר"}</span>. 
-      האימון יתבצע ב- <span style="color: green;">${getFormattedValue(values["partThree"]["איפה מתרגלים"]) || "לא נבחר"}</span>, 
-      כאשר לא ניתן להביא אמצעים בעת התרגול: <span style="color: green;">${getFormattedValue(values["partThree"]["איך מתרגלים"]) || "לא נבחר"}</span>.</p>
-       <p>טווחי הזמן במהלך התרגיל הם <span style="color: green;">${getFormattedValue(values["partFour"]["טווחי זמן"]) || "לא נבחר"}</span>, 
-      כאשר קפיצות הזמן יכללו <span style="color: green;">${getFormattedValue(values["partFour"]["קפיצות זמן"]) || "לא נבחר"}</span>. 
-      מאפייני החירום במהלך התרגיל כוללים <span style="color: green;">${getFormattedValue(values["partFour"]["מאפייני החירום"]) || "לא נבחר"}</span>. 
-      הרגשות הצפויים הם <span style="color: green;">${getFormattedValue(values["partFour"]["רגשות"]) || "לא נבחר"}</span>.</p>
-       <p>שעת התרגול תהיה <span style="color: green;">${getFormattedValue(values["partFive"]["שעה_ועונה"]) || "לא נבחר"}</span>, 
-      בעונה של <span style="color: green;">${getFormattedValue(values["partFive"]["עונות"]) || "לא נבחר"}</span> 
-      עם תנאי מזג אוויר של <span style="color: green;">${getFormattedValue(values["partFive"]["תנאי_חום_ומזג_אוויר"]) || "לא נבחר"}</span>. 
-      מטרות והישגים במהלך התרגיל כוללים <span style="color: green;">${getFormattedValue(values["partFive"]["מטרות_והישגים"]) || "לא נבחר"}</span>. 
-      התחושות צפויות להיות של <span style="color: green;">${getFormattedValue(values["partFive"]["תחושות"]) || "לא נבחר"}</span>.</p>
+      <p>ההתרגיל יתבצע ברשות אשר מאופיינת ב- <span style="color: green;">${getFormattedValue(values["partOne"]?.["מאפייני הרשות"]) || "לא נבחר"}</span>. 
+      אוכלוסיית הרשות מכילה בתוכה <span style="color: green;">${getFormattedValue(values["partOne"]?.["אוכלוסיה"]) || "לא נבחר"}</span>. 
+      הרשות נמצאת ב<span style="color: green;">${getFormattedValue(values["partOne"]?.["אזור בארץ"]) || "לא נבחר"}</span>, 
+      עם כיווני גישה מ- <span style="color: green;">${getFormattedValue(values["partOne"]?.["כיווני גישה"]) || "לא נבחר"}</span>. 
+      הדרכים ברשות הינן <span style="color: green;">${getFormattedValue(values["partOne"]?.["דרכים ברשות"]) || "לא נבחר"}</span> 
+      וצירי הגישה לרשות הם <span style="color: green;">${getFormattedValue(values["partOne"]?.["צירי גישה לרשות"]) || "לא נבחר"}</span>. 
+      תחבורה ברשות כוללת <span style="color: green;">${getFormattedValue(values["partOne"]?.["תחבורה ברשות"]) || "לא נבחר"}</span>.</p>
+        <p>סוג מצב החירום הוא <span style="color: green;">${getFormattedValue(values["partTwo"]?.["סוג_מצב_חירום"]) || "לא נבחר"}</span>, 
+      והאיומים על הרשות הם <span style="color: green;">${getFormattedValue(values["partTwo"]?.["איומים_על_הרשות"]) || "לא נבחר"}</span>. 
+      אתגרים במהלך התרגיל כוללים <span style="color: green;">${getFormattedValue(values["partTwo"]?.["אתגרים"]) || "לא נבחר"}</span>.</p>
+       <p>מי שמגיע לאימון הם <span style="color: green;">${getFormattedValue(values["partThree"]?.["מי מגיע לאימון"]) || "לא נבחר"}</span>, 
+      ובמהלך האימון נתמקד ב- <span style="color: green;">${getFormattedValue(values["partThree"]?.["מה מתרגלים"]) || "לא נבחר"}</span>. 
+      האימון יתבצע ב- <span style="color: green;">${getFormattedValue(values["partThree"]?.["איפה מתרגלים"]) || "לא נבחר"}</span>, 
+      כאשר לא ניתן להביא אמצעים בעת התרגול: <span style="color: green;">${getFormattedValue(values["partThree"]?.["איך מתרגלים"]) || "לא נבחר"}</span>.</p>
+       <p>טווחי הזמן במהלך התרגיל הם <span style="color: green;">${getFormattedValue(values["partFour"]?.["טווחי זמן"]) || "לא נבחר"}</span>, 
+      כאשר קפיצות הזמן יכללו <span style="color: green;">${getFormattedValue(values["partFour"]?.["קפיצות זמן"]) || "לא נבחר"}</span>. 
+      מאפייני החירום במהלך התרגיל כוללים <span style="color: green;">${getFormattedValue(values["partFour"]?.["מאפייני החירום"]) || "לא נבחר"}</span>. 
+      הרגשות הצפויים הם <span style="color: green;">${getFormattedValue(values["partFour"]?.["רגשות"]) || "לא נבחר"}</span>.</p>
+       <p>שעת התרגול תהיה <span style="color: green;">${getFormattedValue(values["partFive"]?.["שעה_ועונה"]) || "לא נבחר"}</span>, 
+      בעונה של <span style="color: green;">${getFormattedValue(values["partFive"]?.["עונות"]) || "לא נבחר"}</span> 
+      עם תנאי מזג אוויר של <span style="color: green;">${getFormattedValue(values["partFive"]?.["תנאי_חום_ומזג_אוויר"]) || "לא נבחר"}</span>. 
+      מטרות והישגים במהלך התרגיל כוללים <span style="color: green;">${getFormattedValue(values["partFive"]?.["מטרות_והישגים"]) || "לא נבחר"}</span>. 
+      התחושות צפויות להיות של <span style="color: green;">${getFormattedValue(values["partFive"]?.["תחושות"]) || "לא נבחר"}</span>.</p>
     `;
   };
  
@@ -103,9 +103,9 @@ const PromptMaker = () => {
   }, [allValues]);
 
   return (
-    <div className="Menupage-container">
+    <div className="promptMaker-container">
       <h1>פרומפט סיפורי</h1>
-      <div dangerouslySetInnerHTML={{ __html: prompt }} />
+      <div className="story" dangerouslySetInnerHTML={{ __html: prompt }} />
     </div>
   );
 };

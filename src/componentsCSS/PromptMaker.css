@@ -1,6 +1,6 @@
 .promptMaker-container{
-    position: fixed;
-      top: 0;
+    position: absolute;
+      top: 10vh;
       left: 0;
       width: 100%;
       height: 100%;
@@ -15,6 +15,9 @@
     .green-text {
         color: green;
         font-weight: bold;
+      }
+      .story{
+
       }
 
   

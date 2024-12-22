@@ -5,6 +5,7 @@ import '../componentsCSS/Parts.css';
 
 const PartFour = () => {
   const [selectedValues, setSelectedValues] = useState({});
+  const [expandedCategories, setExpandedCategories] = useState({}); // הוספת משתנה למעקב אחרי הקטגוריות המורחבות
   const jsonData = training; // קריאה מה-JSON
   const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const PartFour = () => {
 
   const getTimePlus = (hours) => {
     const now = new Date();
-    now.setHours(now.getHours() + hours);
+    now.setHours(now.getHours() + hours); // מוסיף שעות
     const hoursStr = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     return `${hoursStr}:${minutes}`;
@@ -34,8 +35,8 @@ const PartFour = () => {
 
   const getTimePlusDays = (days) => {
     const now = new Date();
-    now.setDate(now.getDate() + days);
-    return now.toLocaleDateString('he-IL');
+    now.setDate(now.getDate() + days); // מוסיף ימים
+    return now.toLocaleDateString('he-IL'); // מחזיר את התאריך החדש בפורמט עברי
   };
 
   // יצירת רשימת טווחי זמן עם הזמן הנוכחי
@@ -128,71 +129,87 @@ const PartFour = () => {
     }
   };
 
+  // פונקציה לניהול התפשטות קטגוריה
+  const toggleCategory = (category) => {
+    setExpandedCategories((prevState) => ({
+      ...prevState,
+      [category]: !prevState[category],
+    }));
+  };
+
   return (
-    <div className="partFour-container">
-      <h1 className="partFour-title">מאפייני תרחיש היחוס</h1>
-
-      {/* יצירת צ'ק-ליסטים ודרופ-דאונים בצורה גנרית */}
-      {Object.keys(jsonData).map(category => (
-        <div key={category}>
-          <h3>{category}</h3>
-
-          {/* אם הקטגוריה מכילה אובייקט (צ'ק-בוקסים) */}
-          {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) ? (
-            Object.keys(jsonData[category]).map(subCategory => (
-              <div key={subCategory}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={selectedValues[category] && selectedValues[category][subCategory] || false}
-                    onChange={() => handleCheckboxChange(category, subCategory)}
-                  />
-                  {subCategory}
-                </label>
-              </div>
-            ))
-          ) : null}
-
-          {/* אם הקטגוריה מכילה מערך (דרופ-דאון) */}
-          {Array.isArray(jsonData[category]) ? (
-            <select
-              value={selectedValues[category] || ''}
-              onChange={(e) => handleDropdownChange(category, e.target.value)}
+    <div className="part-container">
+      <h1 className="Part-title">04 הגדרת מאפייני האימון      </h1>
+      <div className="user-Selections">
+        {Object.keys(jsonData).map((category, index) => (
+          <div key={category} className={`category-container category-${index}`}>
+            <div
+              className="category-header"
+              onClick={() => toggleCategory(category)} // כעת הכותרת והחץ גם יחד מקבלים את האירוע
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             >
-              <option value="">בחר</option>
-              {/* אם הקטגוריה היא טווחי זמן, נשתמש ב-timeRanges */}
-              {category === "טווחי זמן" ? (
-                timeRanges.map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))
-              ) : (
-                jsonData[category].map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))
+              <h3 style={{ marginRight: '8px' }}>{category}</h3>
+              {/* החץ מוצג רק אם מדובר בקטגוריה עם אובייקט (צ'ק בוקסים) */}
+              {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) && (
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/imgs/nextBlack.png`}
+                  alt="Toggle"
+                  className={`chevron ${expandedCategories[category] ? 'expanded' : ''}`}
+                  style={{ marginLeft: '8px', cursor: 'pointer' }}
+                />
               )}
-            </select>
-          ) : null}
-        </div>
-      ))}
-
-      {/* הצגת הבחירות כטקסט בתוך פסקה */}
-      <div className="selected-info">
-        <h2>הבחירות שביצעת:</h2>
-        <p>{renderSelectedValues()}</p>
+            </div>
+            {typeof jsonData[category] === 'object' && !Array.isArray(jsonData[category]) && expandedCategories[category] && (
+              <div className="checkbox-group">
+                {Object.keys(jsonData[category]).map((subCategory) => (
+                  <div key={subCategory} className="checkbox-item">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={selectedValues[category]?.[subCategory] || false}
+                        onChange={() => handleCheckboxChange(category, subCategory)}
+                      />
+                      {subCategory}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            )}
+            {Array.isArray(jsonData[category]) && (
+              <div className="dropdown-group">
+                <select
+                  value={selectedValues[category] || ''}
+                  onChange={(e) => handleDropdownChange(category, e.target.value)}
+                >
+                  <option value="">בחרו</option>
+                  {category === "טווחי זמן" ? (
+                    timeRanges.map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))
+                  ) : (
+                    jsonData[category].map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-
-      {/* כפתור אשר והמשך */}
-      <div>
+      <div className="selected-info">
+        <h2 className="selsected-title">הבחירות שלך:</h2>
+        <p>{renderSelectedValues()}</p>
         <button
           className="button-go"
-          disabled={!isAllSelected()}
           onClick={handleNextStep}
+          disabled={!isAllSelected()}
         >
-          אשר והמשך
+          המשך
         </button>
       </div>
     </div>
