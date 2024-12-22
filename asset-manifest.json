@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/propmpts-maker/static/css/main.4f4007ec.css",
-    "main.js": "/propmpts-maker/static/js/main.5b48b547.js",
+    "main.css": "/propmpts-maker/static/css/main.111ccaf6.css",
+    "main.js": "/propmpts-maker/static/js/main.7edb705c.js",
     "static/js/488.543ebe43.chunk.js": "/propmpts-maker/static/js/488.543ebe43.chunk.js",
     "static/media/Bg2.png": "/propmpts-maker/static/media/Bg2.9fc000d95fcf3800a127.png",
     "static/media/Bg1.png": "/propmpts-maker/static/media/Bg1.ac9f9c75b406e10ae608.png",
     "index.html": "/propmpts-maker/index.html",
-    "main.4f4007ec.css.map": "/propmpts-maker/static/css/main.4f4007ec.css.map",
-    "main.5b48b547.js.map": "/propmpts-maker/static/js/main.5b48b547.js.map",
+    "main.111ccaf6.css.map": "/propmpts-maker/static/css/main.111ccaf6.css.map",
+    "main.7edb705c.js.map": "/propmpts-maker/static/js/main.7edb705c.js.map",
     "488.543ebe43.chunk.js.map": "/propmpts-maker/static/js/488.543ebe43.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4f4007ec.css",
-    "static/js/main.5b48b547.js"
+    "static/css/main.111ccaf6.css",
+    "static/js/main.7edb705c.js"
   ]
 }
